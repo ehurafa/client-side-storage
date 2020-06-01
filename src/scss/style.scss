@@ -1,7 +1,54 @@
 @import 'reset';
 @import 'grid';
+@import 'vars';
+@import 'helpers';
+@import 'components';
 
+:root {
+    font-size: 16px;
+}
 body {
-    background: #333;
+    background: $base_color;
+    color: $white;
+    font-family: 'Roboto', sans-serif;
 }
 
+
+.header {
+    background: $black;
+    .grid {
+
+    }
+}
+
+main {
+    margin: 2rem 0;
+    .cadform {
+        form{           
+            background: $grey;
+            padding: 1rem 0;
+            .grid {
+                width: 100%;
+            }
+        }
+        .wrap-button {
+            display:flex;
+            align-items: flex-end;
+        }
+    }
+
+    .contact-list {
+        table {    
+            width: 100%;
+            background: $white;
+            color: $base_color;
+            margin-top: 1rem;
+        }
+    }
+    
+}
+
+footer {
+    padding: 1rem 0;
+    background: $grey;
+}
