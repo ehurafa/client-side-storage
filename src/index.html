@@ -25,16 +25,83 @@
              <div class="panel--head">
                Escolha o tipo de armazenamento
              </div>
+             <div class="panel--body">
+               <select name="type" id="typeStorage">Tipo de Armazenamto</select>
+               <div class="badge">Você está usando: --</div>
+             </div>
+          </div>
+        </div>                
+      </div>
+    </section>   
+
+    <section class="cadform">
+      <form>
+        <div class="grid">
+          <div class="col-desk-3">
+            <label for="inputname">Nome</label>
+            <input type="text" id="inputname" name="inputname" />
+          </div>
+          <div class="col-desk-3">
+            <label for="inputemail">E-mail</label>
+            <input type="email" id="inputemail" name="inputemail" />
+          </div>
+          <div class="col-desk-3">
+            <label for="inputphone">Telefone</label>
+            <input type="tel" id="inputphone" name="inputphone" />
+          </div>
+          <div class="col-desk-3">
+            <button>Gravar Contato</button>
+          </div>
+        </div>
+      </form>    
+    </section>
+
+    <section class="contact-list">
+      <div class="grid">
+        <div class="col-desk-12">
+          <div class="panel">
+             <div class="panel--head">
+               Lista de Contatos
+             </div>
+             <div class="panel--body">
+              <div class="grid">
+                <div class="col-desk-12">
+                  <input type="search">
+                  <button>Procurar</button>
+                </div>
+
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>E-mail</th>
+                      <th>Telefone</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+               
+              </div>
+             </div>
           </div>
         </div>                
       </div>
     </section>
 
-    <section class="cadform"></section>
-
-    <section class="contact-list"></section>
-
-    <footer class="footer"></footer>
+    <footer class="footer">
+      <div class="grid">
+        <div class="col-desk-12">
+          <p>Rafael Gomes 2020</p>
+        </div>
+      </div>
+    </footer>
 
      <script src="app.js"></script>
   </body>  
