@@ -20,7 +20,7 @@
 
     <main>    
   
-      <section class="type m-b-20">
+      <section class="type spacer">
         <div class="grid">
           <div class="col-desk-12">
             <div class="panel">
@@ -33,30 +33,30 @@
                   <option value="--">Tipo de Armazenamto</option>                  
                 </select>
 
-                 <div class="badge">Você está usando: --</div>
+                 <div class="badge">Você está usando: <span id="dbSelected"></span></div>
                </div>
             </div>
           </div>                
         </div>
       </section>   
   
-      <section class="cadform m-b-20">
+      <section class="cadform spacer">
         
           <div class="grid">
             <div class="col-desk-12">
-              <form> 
+              <form id='cadForm'> 
                 <div class="grid">
                   <div class="col-desk-3">
                     <label for="inputname">Nome</label>
-                    <input type="text" id="inputname" name="inputname" />
+                    <input type="text" id="inputname" name="inputname" required />
                   </div>
                   <div class="col-desk-3">
                     <label for="inputemail">E-mail</label>
-                    <input type="email" id="inputemail" name="inputemail" />
+                    <input type="email" id="inputemail" name="inputemail" required />
                   </div>
                   <div class="col-desk-3">
                     <label for="inputphone">Telefone</label>
-                    <input type="tel" id="inputphone" name="inputphone" />
+                    <input type="tel" id="inputphone" name="inputphone" required />
                   </div>
                   <div class="col-desk-3 wrap-button" >      
                     <button>Gravar Contato</button>     
@@ -68,7 +68,7 @@
        
       </section>
   
-      <section class="contact-list m-b-20">
+      <section class="contact-list spacer">
         <div class="grid">
           <div class="col-desk-12">
             <div class="panel">
@@ -92,9 +92,24 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>teste</td>
+                        <td>teste@teste.com</td>
+                        <td>1144444444</td>
+                      </tr>
+                      <tr>
+                        <td>teste</td>
+                        <td>teste@teste.com</td>
+                        <td>1144444444</td>
+                      </tr>
+                      <tr>
+                        <td>teste</td>
+                        <td>teste@teste.com</td>
+                        <td>1144444444</td>
+                      </tr>
+                      <tr>
+                        <td>teste</td>
+                        <td>teste@teste.com</td>
+                        <td>1144444444</td>
                       </tr>
                     </tbody>
                   </table>
@@ -108,7 +123,7 @@
     </main>
   
 
-    <footer class="footer m-b-20">
+    <footer class="footer">
       <div class="grid">
         <div class="col-desk-12">
           <p>Rafael Gomes 2020</p>

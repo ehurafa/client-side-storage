@@ -8,7 +8,7 @@ label {
 
 input, select {
     @include  transition(all .3s ease);
-    @extend %line-height;
+    @include line-height($input_height);
 
     padding: 0 0.5rem;
     display: inline-block;

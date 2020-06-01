@@ -41,3 +41,8 @@
     background-color: $solid-color;
     background-color: $color;
   }
+
+  @mixin line-height($height) {
+    height: $height;
+    line-height: $height;
+  }

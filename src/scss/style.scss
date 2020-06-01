@@ -5,24 +5,35 @@
 @import 'components';
 
 :root {
-    font-size: 16px;
+    font-size: 16px;   
+    margin: 0;
+}
+
+html {
+    height: calc(100% - #{$header_height} );
 }
 body {
     background: $base_color;
     color: $white;
     font-family: 'Roboto', sans-serif;
+    height: calc(100% - #{$header_height} );
+    margin: 0;
 }
 
 
 .header {
-    background: $black;
-    .grid {
+    @include line-height($header_height);
 
+    background: $black;  
+    h1 {
+        margin: 0;
     }
 }
 
 main {
     margin: 2rem 0;
+    min-height: 100%;
+ 
     .cadform {
         form{           
             background: $grey;
@@ -43,12 +54,27 @@ main {
             background: $white;
             color: $base_color;
             margin-top: 1rem;
+            text-align: center;
+            border: 0;
+            thead {
+                border-bottom: 1px solid red;
+                border: 1px solid $grey;
+            }
+            tr {
+                &:nth-child(even) {
+                    background-color:  rgba( $grey, 0.1);
+                  }
+            }
+            td,th{               
+                padding: 0.5rem 0;
+            }
         }
     }
     
 }
 
 footer {
-    padding: 1rem 0;
     background: $grey;
+    height: 50px;
+    margin-top: -20px;
 }
