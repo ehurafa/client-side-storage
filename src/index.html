@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
     <title>Client Side Storage</title>
     <link rel="stylesheet" href="css/style.css" />
+   
   </head>
   <body>
 
@@ -28,13 +29,18 @@
                  Escolha o tipo de armazenamento
                </div>
                <div class="panel--body">
+
+                 <nav>
+                   <span onclick="selectedDb('localStorage')">op 1</span>
+                   <span onclick="selectedDb('sessionStorage')">op 2</span>
+                 </nav>
                
-                 <select name="type" id="typeStorage">
-                  <option value="javascript: selectDb('localStorage');">Local Storage</option>     
-                  <option value="javascript: selectDb('sessionStorage');">Session Storage</option>              
+                 <select name="type" id="typeStorage" onchange="selectedDb(this);">
+                  <option value="localStorage">Local Storage</option>     
+                  <option value="sessionStorage">Session Storage</option>              
                 </select>
 
-                 <div class="badge">Você está usando: <span id="dbSelected"></span></div>
+                 <div class="badge"><span id="dbSelected"></span></div>
                </div>
             </div>
           </div>                
@@ -45,7 +51,7 @@
         
           <div class="grid">
             <div class="col-desk-12">
-              <form id='cadForm'> 
+              <form id="cadForm"> 
                 <div class="grid">
                   <div class="col-desk-3">
                     <label for="inputname">Nome</label>
@@ -60,7 +66,7 @@
                     <input type="tel" id="inputphone" name="contact.phone" required />
                   </div>
                   <div class="col-desk-3 wrap-button" >      
-                    <button>Gravar contact</button>     
+                    <button type="submit">Gravar contact</button>     
                   </div>
                 </div>
               </form> 
@@ -92,26 +98,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>teste</td>
-                        <td>teste@teste.com</td>
-                        <td>1144444444</td>
-                      </tr>
-                      <tr>
-                        <td>teste</td>
-                        <td>teste@teste.com</td>
-                        <td>1144444444</td>
-                      </tr>
-                      <tr>
-                        <td>teste</td>
-                        <td>teste@teste.com</td>
-                        <td>1144444444</td>
-                      </tr>
-                      <tr>
-                        <td>teste</td>
-                        <td>teste@teste.com</td>
-                        <td>1144444444</td>
-                      </tr>
+                  
                     </tbody>
                   </table>
                  
@@ -131,7 +118,7 @@
         </div>
       </div>
     </footer>
-
-     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+     
   </body>  
 </html>
