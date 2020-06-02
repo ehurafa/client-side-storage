@@ -1,14 +1,19 @@
 
-var gulp = require("gulp"),
+const gulp = require("gulp"),
 sass = require("gulp-sass"),
 postcss = require("gulp-postcss"),
 autoprefixer = require("autoprefixer"),
 cssnano = require("cssnano"),
 sourcemaps = require("gulp-sourcemaps"),
 browserSync = require("browser-sync").create(),
+eslint = require('gulp-eslint'),
 babel = require('gulp-babel');
 
-var paths = {
+// const {src, task} = require('gulp');
+
+// const config_project = require('./package.json');
+
+const paths = {
     styles: {
         // By using styles/**/*.sass we're telling gulp to check all folders for any sass file
         src: "src/scss/*.scss",
@@ -57,10 +62,13 @@ function watch() {
 }
 
 function js() {
-    return  gulp.src('src/app.js')
+    return  gulp.src('src/js/*.js')
     .pipe(babel({
         presets: ['@babel/env']
     }))
+     .pipe(eslint())
+     .pipe(eslint.format())
+    // .pipe(eslint.failAfterError())
     .pipe(gulp.dest('dist'))
 }
 

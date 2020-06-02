@@ -30,7 +30,8 @@
                <div class="panel--body">
                
                  <select name="type" id="typeStorage">
-                  <option value="--">Tipo de Armazenamto</option>                  
+                  <option value="javascript: selectDb('localStorage');">Local Storage</option>     
+                  <option value="javascript: selectDb('sessionStorage');">Session Storage</option>              
                 </select>
 
                  <div class="badge">Você está usando: <span id="dbSelected"></span></div>
@@ -48,18 +49,18 @@
                 <div class="grid">
                   <div class="col-desk-3">
                     <label for="inputname">Nome</label>
-                    <input type="text" id="inputname" name="inputname" required />
+                    <input type="text" id="inputname" name="contact.name" required />
                   </div>
                   <div class="col-desk-3">
                     <label for="inputemail">E-mail</label>
-                    <input type="email" id="inputemail" name="inputemail" required />
+                    <input type="email" id="inputemail" name="contact.email" required />
                   </div>
                   <div class="col-desk-3">
                     <label for="inputphone">Telefone</label>
-                    <input type="tel" id="inputphone" name="inputphone" required />
+                    <input type="tel" id="inputphone" name="contact.phone" required />
                   </div>
                   <div class="col-desk-3 wrap-button" >      
-                    <button>Gravar Contato</button>     
+                    <button>Gravar contact</button>     
                   </div>
                 </div>
               </form> 
@@ -73,16 +74,16 @@
           <div class="col-desk-12">
             <div class="panel">
                <div class="panel--head">
-                 Lista de Contatos
+                 Lista de contacts
                </div>
                <div class="panel--body">
              
          
-                    <input type="search">
-                    <button>Procurar</button>
+                    <input type="search" id="filter">
+                    <button id="search">Procurar</button>
                   
   
-                  <table>
+                  <table id="contacts">
                     <thead>
                       <tr>
                         <th>Nome</th>
@@ -131,6 +132,6 @@
       </div>
     </footer>
 
-     <script src="app.js"></script>
+     <script type="text/javascript" src="js/app.js"></script>
   </body>  
 </html>
