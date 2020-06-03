@@ -6,7 +6,7 @@ Aplicação com as APIs de armazenamento de dados HTML5.
 - [x] Configuração inicial com um mini workflow utilizando o Gulp
 - [x] Configuração da estrutura SASS com vars, mixins, placeholders, components e grid
 - [x] Web Storage API - LocalStorage 
-- [ ] Web Storage API - SessionStorage
+- [x] Web Storage API - SessionStorage
 - [ ] Web SQL Database
 - [ ] API IndexedDB
 - [ ] API IndexedDB + Promise

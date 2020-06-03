@@ -16,6 +16,25 @@ var save = function save(type, contact) {
     item.push(contact);
     renderLine(item);
   }
+
+  console.log('type --- ', type);
+
+  if (type == "sessionStorage") {
+    var _contacts = JSON.parse(sessionStorage.getItem("contacts"));
+
+    console.log('contacts 1 ', _contacts);
+
+    _contacts.push(contact);
+
+    sessionStorage.setItem("contacts", JSON.stringify(_contacts));
+    console.log('contacts 1 ', _contacts);
+    var _item = [];
+
+    _item.push(contact);
+
+    console.log('item 1 ', _item);
+    renderLine(_item);
+  }
 };
 
 var insertCell = function insertCell(newRow, cells, contact) {
@@ -45,11 +64,18 @@ var renderAll = function renderAll(contacts) {
 };
 
 var getAll = function getAll(type) {
+  console.log('getAll');
   iniDb(type);
 
   if (type == "localStorage") {
     var contacts = JSON.parse(localStorage.getItem("contacts"));
     renderAll(contacts);
+  }
+
+  if (type == "sessionStorage") {
+    var _contacts2 = JSON.parse(sessionStorage.getItem("contacts"));
+
+    renderAll(_contacts2);
   }
 };
 
@@ -72,6 +98,20 @@ var search = function search(type, term) {
       }
     });
     renderAll(contactsFound);
+  }
+
+  if (type == "sessionStorage") {
+    var _contacts3 = JSON.parse(sessionStorage.getItem("contacts"));
+
+    var _contactsFound = [];
+
+    _contacts3.forEach(function (contact) {
+      if (contact.name == term || contact.email == term) {
+        _contactsFound.push(contact);
+      }
+    });
+
+    renderAll(_contactsFound);
   }
 };
 

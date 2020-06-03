@@ -21,12 +21,34 @@ const save = (type, contact) => {
         item.push(contact);
         renderLine(item);
     }  
+
+    console.log('type --- ', type);
+
+    if (type == "sessionStorage") {
+        let contacts = JSON.parse(sessionStorage.getItem("contacts"));
+
+        console.log('contacts 1 ', contacts);
+
+        contacts.push(contact);
+        sessionStorage.setItem("contacts", JSON.stringify(contacts));
+
+        console.log('contacts 1 ', contacts);
+
+        let item = [];
+
+        item.push(contact);
+
+        console.log('item 1 ', item);
+        renderLine(item);
+    }  
+
+    
 } 
 
-const insertCell = function(newRow, cells, contact) {
+const insertCell = (newRow, cells, contact) => {
     let rows = [];
 
-    cells.forEach(function(formElemntName, i, arr) {
+    cells.forEach((formElemntName, i, arr) => {
        
         let textNode =  document.createTextNode(contact[formElemntName]);
 
@@ -52,7 +74,6 @@ const factoryContact = (table, contact) => {
   }); 
 } 
 
-
 const renderAll = (contacts) => { 
 
     const newTbody = document.createElement('tbody');    
@@ -63,13 +84,19 @@ const renderAll = (contacts) => {
       
 }
 
-const getAll = (type) => { 
+const getAll = (type) => {  console.log('getAll');
     iniDb(type);   
 
     if (type == "localStorage") {
         const contacts = JSON.parse(localStorage.getItem("contacts"));
 
-       renderAll(contacts);
+        renderAll(contacts);
+    }
+
+    if (type == "sessionStorage") {
+        const contacts = JSON.parse(sessionStorage.getItem("contacts"));
+
+        renderAll(contacts);
     }
 }
 
@@ -95,7 +122,22 @@ const search = (type, term) => {
                 contactsFound.push(contact);
             }
       
-        });
+       });
+        renderAll(contactsFound);
+    }
+
+    if (type == "sessionStorage") { 
+        const contacts = JSON.parse(sessionStorage.getItem("contacts"));
+
+        const contactsFound = [];
+
+        contacts.forEach((contact) => { 
+   
+            if (contact.name == term || contact.email == term) {
+                contactsFound.push(contact);
+            }
+      
+       });
         renderAll(contactsFound);
     }
 }  
@@ -106,7 +148,6 @@ searchEvt.addEventListener('click', (evt) => {
 
     search(storageSetup(), term);
 }); 
-
 
 const removeContact = (row) => {
     let i = row.parentNode.parentNode.rowIndex;

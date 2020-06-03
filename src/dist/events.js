@@ -11,7 +11,7 @@ cadForm.addEventListener('submit', function (e) {
       'email': formData.get('contact.email'),
       'phone': formData.get('contact.phone')
     };
-    save("localStorage", contact);
+    save(storageSetup(), contact);
     cadForm.reset();
     e.preventDefault();
     console.info('formulario preenchido');

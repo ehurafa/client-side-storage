@@ -14,7 +14,7 @@ cadForm.addEventListener('submit', function(e) {
             'phone': formData.get('contact.phone')
         }
 
-        save("localStorage", contact);
+        save(storageSetup(), contact);
 
         cadForm.reset();
 

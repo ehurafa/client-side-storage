@@ -17,8 +17,12 @@ var storageSetup = function storageSetup() {
 var cleanDb = function cleanDb() {
   console.log('cleanDb');
 
-  if (localStorage.getItem("db")) {
-    localStorage.removeItem("db");
+  if (localStorage.getItem("contacts")) {
+    localStorage.removeItem("contacts");
+  }
+
+  if (sessionStorage.getItem("contacts")) {
+    sessionStorage.removeItem("contacts");
   }
 };
 
@@ -27,6 +31,8 @@ var selectedDb = function selectedDb(type) {
   cleanDb();
   localStorage.setItem('db', type.options[type.selectedIndex].value);
   dbSelected.innerHTML = "Voc\xEA est\xE1 usando: ".concat(storageSetup());
+  getAll(localStorage.getItem('db'));
+  console.log('tipo selecionado ', localStorage.getItem('db'));
 };
 
 var iniDb = function iniDb(type) {
@@ -35,6 +41,12 @@ var iniDb = function iniDb(type) {
   if (type == "localStorage") {
     if (!localStorage.getItem("contacts")) {
       localStorage.setItem("contacts", JSON.stringify([]));
+    }
+  }
+
+  if (type == "sessionStorage") {
+    if (!sessionStorage.getItem("contacts")) {
+      sessionStorage.setItem("contacts", JSON.stringify([]));
     }
   }
 };
