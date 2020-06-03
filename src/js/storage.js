@@ -1,100 +1,41 @@
-// const iniDb = (type) => {
-//     console.log(type);
-// }
+let dbSelected = document.getElementById('dbSelected');
 
-// const cleanDb = () => {
-
-// }
-
-// const save = (type, contact) => {
-//     iniDb(type);
-// }
-
-// const getAll = (type) => {
-//     initDb(type);
-// }
-
-// const search = (type, term) => {
-//     iniDb(type);
-// }
-
-
-
-const renderLine = (contact) => {  
-
-    let table = document.getElementById('contatos').getElementsByTagName('tbody')[0];
-
-    contact.array.forEach(item => {
-        
-        const newRow = table.insertRow(table.rows.length);
-
-        const cellName = newRow.insertCell(0);
-
-        const cellEmail = newRow.insertCell(1);
-
-        const cellPhone = newRow.insertCell(2);
-
-        const cellButton = newRow.insertCell(3);
-
-        const name = document.createTextNode(item['name']);
-
-        const email = document.createTextNode(item['email']);
-
-        const phone = document.createTextNode(item['phone']);
-
-        cellName.appendChild(name);
-        cellEmail.appendChild(email);
-        cellPhone.appendChild(phone);
-
-        cellButton.innerHTML = "<button type='button' onclick='removeContact(this)'></button>"; 
-
-        console.log(item['name'], item['email'], item['phone']);
-
-    });
-} 
-
-const renderAll = (contacts) => {   
-
-    console.log(contacts);
-
-    let table = document.getElementById('contatos').getElementsByTagName('tbody')[0];
-
-    const newTbody = document.createElement('tbody');    
-
-    table.parentNode.replaceChild(newTbody, table);
-
-    table = document.getElementById('contatos').getElementsByTagName('tbody')[0];
-
-    contact.array.forEach(item => {
-        
-        const newRow = table.insertRow(table.rows.length);
-
-        const cellName = newRow.insertCell(0);
-
-        const cellEmail = newRow.insertCell(1);
-
-        const cellPhone = newRow.insertCell(2);
-
-        const cellButton = newRow.insertCell(3);
-
-        const name = document.createTextNode(item['name']);
-
-        const email = document.createTextNode(item['email']);
-
-        const phone = document.createTextNode(item['phone']);
-
-        cellName.appendChild(name);
-        cellEmail.appendChild(email);
-        cellPhone.appendChild(phone);
-
-        cellButton.innerHTML = "<button type='button' onclick='removeContact(this)'></button>"; 
-
-        console.log(item['name'], item['email'], item['phone']);
-
-    });
-      
+// const storages = ["localStorage", "sessionStorage"];
+const storages = {
+    "types": ["localStorage", "sessionStorage"],
+    "isStorage": function(type) {
+        if (type == "localStorage") return true
+    }
 }
 
-renderAll();
+const storageSetup = () => {
+    if (!localStorage.db) localStorage.setItem('db', "localStorage");
 
-renderLine();
+    return localStorage.getItem('db');
+}
+
+const cleanDb = () => {  console.log('cleanDb');
+    
+    if (localStorage.getItem("db"))  {
+        localStorage.removeItem("db");
+    }
+       
+}
+
+const selectedDb = (type) => {   console.log('selectedDb');
+  
+    cleanDb();
+    localStorage.setItem('db', type.options[type.selectedIndex].value);
+   
+    dbSelected.innerHTML = `Você está usando: ${storageSetup()}`;
+}
+
+const iniDb = (type) => {  console.log('func  iniDb ', type);
+   if (type == "localStorage") {
+        if (!localStorage.getItem("contacts"))  {
+            localStorage.setItem("contacts", JSON.stringify([]));  
+        }                 
+   }
+}
+
+

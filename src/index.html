@@ -29,18 +29,13 @@
                  Escolha o tipo de armazenamento
                </div>
                <div class="panel--body">
-
-                 <nav>
-                   <span onclick="selectedDb('localStorage')">op 1</span>
-                   <span onclick="selectedDb('sessionStorage')">op 2</span>
-                 </nav>
                
                  <select name="type" id="typeStorage" onchange="selectedDb(this);">
                   <option value="localStorage">Local Storage</option>     
                   <option value="sessionStorage">Session Storage</option>              
                 </select>
 
-                 <div class="badge"><span id="dbSelected"></span></div>
+                 <div class="badge"><span id="dbSelected">Você está usando: localStorage</span></div>
                </div>
             </div>
           </div>                
@@ -118,7 +113,9 @@
         </div>
       </div>
     </footer>
-    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="dist/storage.js"></script>
+    <script type="text/javascript" src="dist/app.js"></script>
+    <script type="text/javascript" src="dist/events.js"></script>
      
   </body>  
 </html>

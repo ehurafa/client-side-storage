@@ -7,7 +7,9 @@ cssnano = require("cssnano"),
 sourcemaps = require("gulp-sourcemaps"),
 browserSync = require("browser-sync").create(),
 eslint = require('gulp-eslint'),
-babel = require('gulp-babel');
+babel = require('gulp-babel'),
+browserify = require('browserify');
+
 
 // const {src, task} = require('gulp');
 
@@ -19,6 +21,10 @@ const paths = {
         src: "src/scss/*.scss",
         // Compiled files will end up in whichever folder it's found in (partials are not compiled)
         dest: "src/css"
+    },
+    scripts: {
+        src: "src/js/*.js",
+        dest: "src/dist"
     }
 };
 
@@ -55,6 +61,7 @@ function watch() {
         // proxy: "yourlocal.dev"
     });
     gulp.watch(paths.styles.src, style);
+    gulp.watch(paths.scripts.src, js);
     // We should tell gulp which files to watch to trigger the reload
     // This can be html or whatever you're using to develop your website
     // Note -- you can obviously add the path to the Paths object
@@ -69,7 +76,8 @@ function js() {
      .pipe(eslint())
      .pipe(eslint.format())
     // .pipe(eslint.failAfterError())
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest(paths.scripts.dest))
+    .pipe(browserSync.stream());
 }
 
 exports.js = js
