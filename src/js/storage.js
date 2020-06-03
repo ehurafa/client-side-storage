@@ -1,5 +1,7 @@
 let dbSelected = document.getElementById('dbSelected');
 
+const db = openDatabase('contacts', '1.0', 'Armazena a lista de contatos', 2 * 1024 * 1024);
+
 // const storages = ["localStorage", "sessionStorage"];
 const storages = {
     "types": ["localStorage", "sessionStorage"],
@@ -23,6 +25,8 @@ const cleanDb = () => {  console.log('cleanDb');
     if (sessionStorage.getItem("contacts"))  {
         sessionStorage.removeItem("contacts");
     }
+
+    removeWebSQL("webSQL");
        
 }
 
@@ -44,10 +48,57 @@ const iniDb = (type) => {  console.log('func  iniDb ', type);
    }
 
    if (type == "sessionStorage") {
-    if (!sessionStorage.getItem("contacts"))  {
-        sessionStorage.setItem("contacts", JSON.stringify([]));  
-    }                 
+        if (!sessionStorage.getItem("contacts"))  {
+            sessionStorage.setItem("contacts", JSON.stringify([]));  
+        }                 
+    }
+
+    if (type == "webSQL") {
+        db.transaction((tx) => {
+            tx.executeSql("CREATE TABLE IF NOT EXISTS " +
+            "contacts(id integer primary key asc, name string not null, email string not null, phone string)",
+            [],
+            function() {
+                console.log('Tabela contacts criada com sucesso!');
+            }
+            )
+        }) 
+    }
+
+
 }
+
+const removeWebSQL = (type) => {
+    iniDb(type);
+
+    if (type == "webSQL") {
+        
+        db.transaction( (tx) => {
+            tx.executeSql(
+                "SELECT COUNT(*) FROM contacts;",
+                [],
+                (tx, results) => {
+                    console.log("web SQL | Count => ", results.rows.item(0)["COUNT(*)"]);
+
+                    if(results.rows.item(0)["COUNT(*)"] > 0) {
+                        db.transaction((tx) => {
+                            tx.executeSql(
+                                "DELETE FROM contacts ", [],
+                                () => { console.log("Contatos removido com sucesso!");}
+                                () => { console.log("Erro ao remover contatos");}
+                            )
+                        })
+                    }
+                },
+                function( ){
+                    console.log("Erro ao conectar!");
+                }
+            )
+        })
+
+
+    }
+
 }
 
 

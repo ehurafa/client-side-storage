@@ -35,6 +35,19 @@ var save = function save(type, contact) {
     console.log('item 1 ', _item);
     renderLine(_item);
   }
+
+  if (type == "webSQL") {
+    db.transaction(function (tx) {
+      tx.executeSql("INSET INTO contats (name, email, phone) values (?,?,?);", [contact.name, contact.email, contact.phone], function () {
+        var item = [];
+        item.push(contact);
+        renderLine(item);
+        console.log("Contato gravado com sucesso! => ", contact);
+      }, function () {
+        console.log("Erro ao gravar o contato");
+      });
+    });
+  }
 };
 
 var insertCell = function insertCell(newRow, cells, contact) {
@@ -77,6 +90,22 @@ var getAll = function getAll(type) {
 
     renderAll(_contacts2);
   }
+
+  if (type == "webSQL") {
+    var _contacts3 = [];
+    db.transaction(function (tx) {
+      tx.executeSql("SELECT * FROM contacts", [], function (tx, results) {
+        for (var i = 0; i < results.rows.length; i++) {
+          _contacts3.push(results.rows.item(i));
+        }
+
+        console.log("web Sql | Contatos => ", _contacts3);
+        renderAll(_contacts3);
+      }, function () {
+        console.log("Erro ao buscar contatos");
+      });
+    });
+  }
 };
 
 getAll(storageSetup());
@@ -88,10 +117,10 @@ var renderLine = function renderLine(contact) {
 var search = function search(type, term) {
   iniDb(type);
   console.log('type ', type);
+  var contactsFound = [];
+  var contacts = JSON.parse(localStorage.getItem("contacts"));
 
   if (type == "localStorage") {
-    var contacts = JSON.parse(localStorage.getItem("contacts"));
-    var contactsFound = [];
     contacts.forEach(function (contact) {
       if (contact.name == term || contact.email == term) {
         contactsFound.push(contact);
@@ -101,17 +130,27 @@ var search = function search(type, term) {
   }
 
   if (type == "sessionStorage") {
-    var _contacts3 = JSON.parse(sessionStorage.getItem("contacts"));
-
-    var _contactsFound = [];
-
-    _contacts3.forEach(function (contact) {
+    contacts.forEach(function (contact) {
       if (contact.name == term || contact.email == term) {
-        _contactsFound.push(contact);
+        contactsFound.push(contact);
       }
     });
+    renderAll(contactsFound);
+  }
 
-    renderAll(_contactsFound);
+  if (type == "webSQL") {
+    db.transaction(function (tx) {
+      tx.executeSql("SELECT * FROM contacts WHERE name = ? OR email =  ?", [term, term], function (tx, results) {
+        for (var i = 0; i < results.rows.length; i++) {
+          contactsFound.push(results.rows.item(i));
+        }
+
+        console.log("web Sql | Contatos encontrados => ", contactsFound);
+        renderAll(contactsFound);
+      }, function () {
+        console.log("Erro ao buscar contatos");
+      });
+    });
   }
 };
 

@@ -42,6 +42,26 @@ const save = (type, contact) => {
         renderLine(item);
     }  
 
+    if (type == "webSQL") {
+
+        db.transaction((tx) => {
+            tx.executeSql(
+                "INSET INTO contats (name, email, phone) values (?,?,?);",
+                [contact.name, contact.email, contact.phone],            
+            () => {
+                let item = [];
+
+                item.push(contact);
+                renderLine(item);
+                console.log("Contato gravado com sucesso! => ", contact);
+            },
+            () => { console.log("Erro ao gravar o contato"); }
+
+            )
+        });
+
+    }
+
     
 } 
 
@@ -98,6 +118,28 @@ const getAll = (type) => {  console.log('getAll');
 
         renderAll(contacts);
     }
+
+    if (type == "webSQL") {
+        let contacts = [];
+
+        db.transaction((tx)=>{
+            tx.executeSql(
+                "SELECT * FROM contacts",
+                [],
+                (tx, results) => {
+                    for (let i = 0; i < results.rows.length; i ++) {
+                        contacts.push(results.rows.item(i));
+                    }
+
+                    console.log("web Sql | Contatos => ", contacts);
+                    renderAll(contacts);
+                },
+                () => {
+                    console.log("Erro ao buscar contatos");
+                }
+            )
+        })
+    }
 }
 
 getAll(storageSetup());
@@ -111,10 +153,10 @@ const search = (type, term) => {
 
     console.log('type ', type);
 
-    if (type == "localStorage") { 
-        const contacts = JSON.parse(localStorage.getItem("contacts"));
+    const contactsFound = [];
+    const contacts = JSON.parse(localStorage.getItem("contacts"));
 
-        const contactsFound = [];
+    if (type == "localStorage") {        
 
         contacts.forEach((contact) => { 
    
@@ -127,10 +169,7 @@ const search = (type, term) => {
     }
 
     if (type == "sessionStorage") { 
-        const contacts = JSON.parse(sessionStorage.getItem("contacts"));
-
-        const contactsFound = [];
-
+       
         contacts.forEach((contact) => { 
    
             if (contact.name == term || contact.email == term) {
@@ -139,6 +178,27 @@ const search = (type, term) => {
       
        });
         renderAll(contactsFound);
+    }
+
+    if (type == "webSQL") {              
+
+        db.transaction((tx)=>{
+            tx.executeSql(
+                "SELECT * FROM contacts WHERE name = ? OR email =  ?",
+                [term, term],
+                (tx, results) => {
+                    for (let i = 0; i < results.rows.length; i ++) {
+                        contactsFound.push(results.rows.item(i));
+                    }
+
+                    console.log("web Sql | Contatos encontrados => ", contactsFound);
+                    renderAll(contactsFound);
+                },
+                () => {
+                    console.log("Erro ao buscar contatos");
+                }
+            )
+        })
     }
 }  
 
