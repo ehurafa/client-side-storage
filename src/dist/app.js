@@ -37,14 +37,16 @@ var save = function save(type, contact) {
   }
 
   if (type == "webSQL") {
+    console.log("xxx ", contact);
     db.transaction(function (tx) {
-      tx.executeSql("INSET INTO contats (name, email, phone) values (?,?,?);", [contact.name, contact.email, contact.phone], function () {
+      tx.executeSql("INSERT INTO contacts (name, email, phone) values (?,?,?);", [contact.name, contact.email, contact.phone], function () {
         var item = [];
         item.push(contact);
         renderLine(item);
         console.log("Contato gravado com sucesso! => ", contact);
-      }, function () {
+      }, function (tx, error) {
         console.log("Erro ao gravar o contato");
+        console.log(error);
       });
     });
   }
@@ -77,7 +79,6 @@ var renderAll = function renderAll(contacts) {
 };
 
 var getAll = function getAll(type) {
-  console.log('getAll');
   iniDb(type);
 
   if (type == "localStorage") {
@@ -93,16 +94,22 @@ var getAll = function getAll(type) {
 
   if (type == "webSQL") {
     var _contacts3 = [];
+    console.log('contacts >> ', _contacts3);
     db.transaction(function (tx) {
-      tx.executeSql("SELECT * FROM contacts", [], function (tx, results) {
+      console.log('tx 1 >> ', tx);
+      tx.executeSql("SELECT COUNT(*) FROM contacts", [], function (tx, results) {
+        console.log('tx2 >> ', tx);
+        console.log('results >> ', results);
+
         for (var i = 0; i < results.rows.length; i++) {
           _contacts3.push(results.rows.item(i));
         }
 
         console.log("web Sql | Contatos => ", _contacts3);
         renderAll(_contacts3);
-      }, function () {
+      }, function (tx, error) {
         console.log("Erro ao buscar contatos");
+        console.log('error');
       });
     });
   }

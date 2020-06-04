@@ -1,6 +1,8 @@
 let dbSelected = document.getElementById('dbSelected');
 
-const db = openDatabase('contacts', '1.0', 'Armazena a lista de contatos', 2 * 1024 * 1024);
+let db = openDatabase('contacts', '1.0', 'Armazena a lista de contatos', 2 * 1024 * 1024);
+
+console.log('db ', db);
 
 // const storages = ["localStorage", "sessionStorage"];
 const storages = {
@@ -40,7 +42,7 @@ const selectedDb = (type) => {   console.log('selectedDb');
     console.log('tipo selecionado ', localStorage.getItem('db'));
 }
 
-const iniDb = (type) => {  console.log('func  iniDb ', type);
+const iniDb = (type) => {  
    if (type == "localStorage") {
         if (!localStorage.getItem("contacts"))  {
             localStorage.setItem("contacts", JSON.stringify([]));  
@@ -84,7 +86,7 @@ const removeWebSQL = (type) => {
                         db.transaction((tx) => {
                             tx.executeSql(
                                 "DELETE FROM contacts ", [],
-                                () => { console.log("Contatos removido com sucesso!");}
+                                () => { console.log("Contatos removido com sucesso!");},
                                 () => { console.log("Erro ao remover contatos");}
                             )
                         })

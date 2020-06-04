@@ -1,7 +1,8 @@
 "use strict";
 
 var dbSelected = document.getElementById('dbSelected');
-var db = openDatabase('contacts', '1.0', 'Armazena a lista de contatos', 2 * 1024 * 1024); // const storages = ["localStorage", "sessionStorage"];
+var db = openDatabase('contacts', '1.0', 'Armazena a lista de contatos', 2 * 1024 * 1024);
+console.log('db ', db); // const storages = ["localStorage", "sessionStorage"];
 
 var storages = {
   "types": ["localStorage", "sessionStorage"],
@@ -39,8 +40,6 @@ var selectedDb = function selectedDb(type) {
 };
 
 var iniDb = function iniDb(type) {
-  console.log('func  iniDb ', type);
-
   if (type == "localStorage") {
     if (!localStorage.getItem("contacts")) {
       localStorage.setItem("contacts", JSON.stringify([]));
@@ -71,8 +70,16 @@ var removeWebSQL = function removeWebSQL(type) {
         console.log("web SQL | Count => ", results.rows.item(0)["COUNT(*)"]);
 
         if (results.rows.item(0)["COUNT(*)"] > 0) {
-          db.transaction(function (tx) {});
+          db.transaction(function (tx) {
+            tx.executeSql("DELETE FROM contacts ", [], function () {
+              console.log("Contatos removido com sucesso!");
+            }, function () {
+              console.log("Erro ao remover contatos");
+            });
+          });
         }
+      }, function () {
+        console.log("Erro ao conectar!");
       });
     });
   }

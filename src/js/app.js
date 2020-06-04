@@ -44,9 +44,11 @@ const save = (type, contact) => {
 
     if (type == "webSQL") {
 
+
+        console.log("xxx ", contact);
         db.transaction((tx) => {
             tx.executeSql(
-                "INSET INTO contats (name, email, phone) values (?,?,?);",
+                "INSERT INTO contacts (name, email, phone) values (?,?,?);",
                 [contact.name, contact.email, contact.phone],            
             () => {
                 let item = [];
@@ -55,7 +57,10 @@ const save = (type, contact) => {
                 renderLine(item);
                 console.log("Contato gravado com sucesso! => ", contact);
             },
-            () => { console.log("Erro ao gravar o contato"); }
+            (tx, error) => {
+                 console.log("Erro ao gravar o contato");
+                 console.log(error);
+                 }
 
             )
         });
@@ -104,7 +109,7 @@ const renderAll = (contacts) => {
       
 }
 
-const getAll = (type) => {  console.log('getAll');
+const getAll = (type) => {
     iniDb(type);   
 
     if (type == "localStorage") {
@@ -120,13 +125,16 @@ const getAll = (type) => {  console.log('getAll');
     }
 
     if (type == "webSQL") {
-        let contacts = [];
+        let contacts = []; 
+        
+        console.log('contacts >> ', contacts );
 
-        db.transaction((tx)=>{
+        db.transaction((tx)=>{  console.log('tx 1 >> ', tx);
             tx.executeSql(
-                "SELECT * FROM contacts",
+                "SELECT COUNT(*) FROM contacts",
                 [],
-                (tx, results) => {
+                (tx, results) => {  console.log('tx2 >> ', tx);
+                console.log('results >> ', results);
                     for (let i = 0; i < results.rows.length; i ++) {
                         contacts.push(results.rows.item(i));
                     }
@@ -134,8 +142,9 @@ const getAll = (type) => {  console.log('getAll');
                     console.log("web Sql | Contatos => ", contacts);
                     renderAll(contacts);
                 },
-                () => {
+                (tx, error) => {
                     console.log("Erro ao buscar contatos");
+                    console.log('error');
                 }
             )
         })
